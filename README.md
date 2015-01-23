@@ -65,3 +65,5 @@ If you would like to render an `.html` file you find in this repo, click on the 
 * [Free Code School Intro to Git](https://www.codeschool.com/courses/try-git)
 * [Pro Git Book](http://git-scm.com/book)
 * [Try Git on GitHub](http://try.github.io/levels/1/challenges/1)
+I am Bailey Albinger.
+I am Psych major.
