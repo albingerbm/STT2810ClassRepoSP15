@@ -1,0 +1,92 @@
+---
+title: "UnivariateDataManagement"
+output: html_document
+---
+
+Univariate Data Management
+
+Three categorical variables  from the data set `NationalEpidemiologicSurveyOnAlcoholAndRelatedConditions` are ` S1Q211`, `S1Q213`, `S1Q22`. The `NESARC` data set is loaded from the `PDS` package.  From the `dplyr` package, a new data frame `NDF` containing only three variables renaming ` S1Q211` to `FeltCalmPeaceful`, `S1Q213` to `FeltDownheartedDepressed`, and `S1Q22` to `HealthInterfereSocialActivities`.
+
+```{r, echo = FALSE, message = FALSE}
+knitr::opts_chunk$set(comment = NA, message = FALSE, warning = FALSE, fig.align = "center")
+```
+
+### Purpose of Study: (Note: This is the last paragraph of the research proposal used to remind the reader of the research objectives.)
+
+The present study will examine young adults from the National Epidemiologic Survey of Alcohol and Related Conditions (NESARC). The goals of the analysis will include 1) establishing the relationship between major depression and nicotine dependence; and 2) determining whether or not the relationship between major depression and nicotine dependence exists above and beyond smoking quantity. 
+
+### Variables:
+
+Variables from NESARC that will be used include: `MAJORDEPLIFE` (has subject experienced a major depression?), `CHECK321` (has subject smoked cigarettes in past 12 months?), `AGE` (age of subject), `TAB12MDX` (tobacco dependence past 12 months), `S3AQ3B1` (usual frequency when cigarettes smoked), `ETHRACE2A` (ethnicity of subject), `SEX` (gender of subject), and `S3AQ3C1` (usual smoking quantity of cigarettes when smoked).  ￼
+
+### Data Management
+
+First, the data is placed on the search path using the `PDS` package.
+Next, a subset of people 25 or younger who smoked in the last 12 months is created using the `filter` function from `dplyr`. Note that `CHECK321 == 1` is used to see if subject has smoked in the past 12 months and `!is.na()` is used to make sure the subset does not contain `NA`s for the chosen variables.  Last, the variables of interest are selected and stored in the data frame `nesarc.sub` using the `select` function from the `dplyr` package.
+
+```{r}
+library(PDS)
+library(dplyr)
+NDF <- NESARC %>%
+rename(FeltCalmPeaceful = S1Q211, FeltDownheartedDepressed = S1Q213, AgeSoughtHelp = S6Q25B) %>%
+select(FeltCalmPeaceful, FeltDownheartedDepressed, AgeSoughtHelp)
+NDF$FeltCalmPeaceful[NDF$FeltCalmPeaceful == 9] <- NA
+summary(NDF$FeltCalmPeaceful)  # Note that 9 still appears
+NDF$FeltCalmPeaceful <- factor(NDF$FeltCalmPeaceful)[, drop = TRUE]
+summary(NDF$FeltCalmPeaceful)  # Unused level no longer appears
+NDF$FeltDownheartedDepressed[NDF$FeltDownheartedDepressed == 9] <- NA
+summary(NDF$FeltDownheartedDepressed)
+NDF$AgeSoughtHelp[NDF$AgeSoughtHelp == 99] <- NA
+NDF$AgeSoughtHelp <- factor(NDF$AgeSoughtHelp)[ , drop = TRUE]
+summary(NDF)
+head(NDF)
+```
+
+```{r}
+library(PDS)
+library(dplyr)
+library(descr)
+freq(as.ordered(NDF$FeltCalmPeaceful))
+freq(as.ordered(NDF$FeltDownheartedDepressed))
+freq(as.ordered(NDF$AgeSoughtHelp))
+
+```{r}
+xtabs(~FeltCalmPeaceful, data = NDF)
+NDF$FeltCalmPeaceful[NDF$FeltCalmPeaceful == 9] <- NA
+xtabs(~FeltCalmPeaceful, data = NDF)
+NDF$FeltCalmPeaceful <- factor(NDF$FeltCalmPeaceful, labels = c("All of the time", "Most of the time", "Some of the time", "A little of the time", "None of the time"))[, drop = TRUE]
+xtabs(~FeltCalmPeaceful, data = NDF)
+summary(NDF$FeltCalmPeaceful)
+library(descr)
+freq(NDF$FeltCalmPeaceful)
+freq(NDF$FeltCalmPeaceful, main = "During the past four weeks, how often did you feel calm and peaceful?")
+library(ggplot2)
+ggplot(data = NDF, aes(x = FeltCalmPeaceful, fill = FeltCalmPeaceful)) + 
+  geom_bar() + 
+  labs(title = "During the past four weeks,\n how often did you feel calm and peaceful?", x = "") +
+  theme_bw() 
+```
+
+```{r}
+xtabs(~FeltDownheartedDepressed, data = NDF)
+NDF$FeltDownheartedDepressed[NDF$FeltDownheartedDepressed == 9] <- NA
+xtabs(~FeltDownheartedDepressed, data = NDF)
+NDF$FeltDownheartedDepressed <- factor(NDF$FeltDownheartedDepressed, labels = c("All of the time", "Most of the time", "Some of the time", "A little of the time", "None of the time"))[, drop = TRUE]
+xtabs(~FeltDownheartedDepressed, data = NDF)
+summary(NDF$FeltDownheartedDepressed)
+library(descr)
+freq(NDF$FeltDownheartedDepressed)
+freq(NDF$FeltDownheartedDepressed, main = "During the past four weeks, how often did you feel downhearted and depressed?")
+library(ggplot2)
+ggplot(data = NDF, aes(x = FeltDownheartedDepressed, fill = FeltDownheartedDepressed)) + 
+  geom_bar() + 
+  labs(title = "During the past four weeks,\n how often did you feel downhearted and depressed?", x = "") +
+  theme_bw() 
+```
+
+```{r}
+hist(NESARC$S6Q25B, col = "blue", main="Age most recently sought help", ylab="Age")
+```
+
+
+
