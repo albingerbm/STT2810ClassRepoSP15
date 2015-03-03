@@ -1,6 +1,11 @@
 ---
+<<<<<<< HEAD
 title: "Research Proposal Template Using [RMarkdown](http://rmarkdown.rstudio.com) and [Zotero](www.zotero.org)"
 author: "Bailey Albinger"
+=======
+title: "Research Proposal Template Using [RMarkdown](http://rmarkdown.rstudio.com) and [Zotero](www.zotero.org) --- The Association between Nicotine Dependence and Major Depression at Different Levels of Smoking Exposure"
+author: "STT 2810"
+>>>>>>> e34b21a6a97e5786614eb7684a6fab58ef84ca35
 date: "Spring 2015"
 output: html_document
 bibliography: ResearchProposal1.bib
