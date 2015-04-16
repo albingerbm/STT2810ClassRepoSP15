@@ -11,7 +11,11 @@ output: html_document
  
 * Work on **Bivariate Graphing Assignment / Data Managment** page 52 PDS
 * **Bivariate Graphing Assignment / Data Managment** see page 52 PDS due NLT 5 PM February 27.  Submit assignment
+<<<<<<< HEAD
 via [http://www.crowdgrader.org](http://www.crowdgrader.org).  The direct link for the Research Plan Assignment is (create assignment here)
+=======
+via [http://www.crowdgrader.org](http://www.crowdgrader.org).  The direct link for the Research Plan Assignment is (http://www.crowdgrader.org/crowdgrader/venues/view_venue/864)
+>>>>>>> 66625b6da4abaa71c8080d9ba5de656a9fe317b6
 
 **Bivariate Graphing Assignment** 
 
